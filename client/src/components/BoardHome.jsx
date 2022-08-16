@@ -4,7 +4,7 @@ import { AuthContext } from '../context/authContext'
 import { TableContext } from '../context/tableContext'
 import { Form } from 'react-bootstrap'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
 	TableChart,
 	Add,
@@ -348,6 +348,9 @@ const BoardHome = () => {
 	const [tableRecentlys, setTableRecentlys] = useState([])
 	const [myTables, setMyTable] = useState([])
 
+	//redrect to table view
+	const navigation = useNavigate()
+
 	//check user is of array member of table
 	const checkIsOfMember = (members, userMember) => {
 		let check = false
@@ -364,7 +367,9 @@ const BoardHome = () => {
 			)
 		user.recentlyTable &&
 			setTableRecentlys(
-				tables.filter((t) => user.recentlyTable.includes(t._id))
+				tables
+					.filter((t) => user.recentlyTable.includes(t._id))
+					.reverse()
 			)
 		setMyTable(
 			tables.filter(
@@ -405,6 +410,22 @@ const BoardHome = () => {
 				setIsOpenCreate((pre) => {
 					return !pre
 				})
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	const updateRecentlyTables = async (e) => {
+		let updateData = {
+			tableId: e.target.id,
+			isFavourite: false,
+			isRecently: true,
+		}
+		try {
+			const res = await updateTableUser(updateData)
+			if (res.success) {
+				navigation(`/table/${e.target.id}`)
 			}
 		} catch (error) {
 			console.error(error)
@@ -529,9 +550,12 @@ const BoardHome = () => {
 											: 'url("https://i.pinimg.com/originals/eb/e4/a3/ebe4a37984a8745e78555906765df486.jpg")',
 									}}
 								>
-									<Link to={`/table/${table._id}`}>
-										<h1>{table.tableName}</h1>
-									</Link>
+									<h1
+										id={table._id}
+										onClick={updateRecentlyTables}
+									>
+										{table.tableName}
+									</h1>
 									<StarOutline
 										className="icon-star"
 										id={table._id}
@@ -561,9 +585,12 @@ const BoardHome = () => {
 											: 'url("https://i.pinimg.com/originals/eb/e4/a3/ebe4a37984a8745e78555906765df486.jpg")',
 									}}
 								>
-									<Link to={`/table/${table._id}`}>
-										<h1>{table.tableName}</h1>
-									</Link>
+									<h1
+										id={table._id}
+										onClick={updateRecentlyTables}
+									>
+										{table.tableName}
+									</h1>
 									<StarOutline
 										className="icon-star"
 										id={table._id}
@@ -630,9 +657,12 @@ const BoardHome = () => {
 											: 'url("https://i.pinimg.com/originals/eb/e4/a3/ebe4a37984a8745e78555906765df486.jpg")',
 									}}
 								>
-									<Link to={`/table/${table._id}`}>
-										<h1>{table.tableName}</h1>
-									</Link>
+									<h1
+										id={table._id}
+										onClick={updateRecentlyTables}
+									>
+										{table.tableName}
+									</h1>
 									<StarOutline
 										className="icon-star"
 										onClick={updateStatusTable}
