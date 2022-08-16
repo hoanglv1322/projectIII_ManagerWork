@@ -6,11 +6,13 @@ const ColumnSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-
+	tableId: {
+		type: Schema.Types.ObjectId,
+		ref: 'tables',
+	},
 	description: {
 		type: String,
 	},
-
 	cards: [
 		{
 			type: Schema.Types.ObjectId,

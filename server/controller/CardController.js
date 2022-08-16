@@ -10,12 +10,10 @@ class CardController {
 				message: 'Invalid information card',
 			})
 		}
-
 		const card = new Card(req.body)
-
 		try {
 			const saveCard = await card.save()
-			await Column.findOneAndUpdate(
+			await Column.findByIdAndUpdate(
 				req.params.columnId,
 				{ $push: { cards: saveCard._id } },
 				{ new: true }
@@ -23,7 +21,7 @@ class CardController {
 			res.status(200).json({
 				success: true,
 				message: 'Create card successfully',
-				saveCard,
+				card: saveCard,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -39,13 +37,14 @@ class CardController {
 				req.params.id,
 				{
 					$set: req.body,
+					upsert: true,
 				},
 				{ new: true }
 			)
 			res.status(200).json({
 				success: true,
 				message: 'Update card successfully',
-				cardUpdated,
+				card: cardUpdated,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -55,12 +54,12 @@ class CardController {
 		}
 	}
 
-	getCard = async (req, res) => {
+	getAllCard = async (req, res) => {
 		try {
-			const card = await Card.findById(req.params.id)
+			const cards = await Card.find()
 			res.status(200).json({
 				success: true,
-				card,
+				cards,
 			})
 		} catch (error) {
 			res.status(500).json({

@@ -11,6 +11,13 @@ const verifyToken = require('../util/verifyToken')
 router.post('/create/:tableId', verifyToken, columnController.createColumn)
 
 /* 
+@Router POST api/column/update/drop/:id
+@des update table drop
+@access Public
+*/
+router.post('/update/drop/:id', verifyToken, columnController.updateDropCard)
+
+/* 
 @Router POST api/column/update/:id
 @des update column
 @access user
@@ -18,11 +25,11 @@ router.post('/create/:tableId', verifyToken, columnController.createColumn)
 router.post('/update/:id', verifyToken, columnController.updateColumn)
 
 /* 
-@Router POST api/column/:id
-@des get column
+@Router POST api/column
+@des get all column
 @access user
 */
-router.get('/:id', verifyToken, columnController.getColumn)
+router.get('/', verifyToken, columnController.getAllColumn)
 
 /* 
 @Router POST api/column/delete/:id

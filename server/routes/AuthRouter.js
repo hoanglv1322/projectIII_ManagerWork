@@ -6,7 +6,7 @@ const verifyToken = require('../util/verifyToken')
 
 /* 
 @Router POST api/auth/
-@des register users
+@des check auth user
 @access Public
 */
 router.get('/', verifyToken, authController.checkAuth)
@@ -20,7 +20,7 @@ router.post('/register', validatorRegister, authController.register)
 
 /* 
 @Router POST api/auth/login
-@des register users
+@des login users
 @access Public
 */
 router.post('/login', authController.login)
@@ -30,6 +30,6 @@ router.post('/login', authController.login)
 @des verify users
 @access Public
 */
-router.post('/verifyuser', verifyToken, authController.verifyUser)
+router.post('/verifyuser/:userId', authController.verifyUser)
 
 module.exports = router

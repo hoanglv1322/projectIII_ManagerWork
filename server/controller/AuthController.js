@@ -37,7 +37,7 @@ class AuthController {
 	verifyUser = async (req, res) => {
 		try {
 			const user = await User.findByIdAndUpdate(
-				req.userId,
+				req.params.userId,
 				{
 					$set: { status: 'active' },
 				},
@@ -66,7 +66,7 @@ class AuthController {
 			if (account) {
 				return res.status(400).json({
 					success: false,
-					message: 'email already exits',
+					message: ['email already exits'],
 				})
 			}
 			//all good

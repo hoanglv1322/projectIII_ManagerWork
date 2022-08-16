@@ -6,23 +6,25 @@ const CardSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-
-	lable: [
+	description: { type: String },
+	columnId: {
+		type: Schema.Types.ObjectId,
+		ref: 'columns',
+	},
+	lables: [
 		{
 			type: String,
 		},
 	],
-
-	member: {
-		type: Schema.Types.ObjectId,
-		ref: 'users',
-	},
-
+	members: [
+		{
+			type: String,
+		},
+	],
 	deadline: {
-		type: Date,
+		type: { type: String },
 	},
-
-	images: [{ type: String }],
+	image: { type: String },
 })
 
 module.exports = mongoose.model('cards', CardSchema)

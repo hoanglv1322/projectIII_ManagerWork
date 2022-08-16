@@ -31,7 +31,7 @@ class TableController {
 
 		try {
 			const saveTable = await table.save()
-			await User.findOneAndUpdate(
+			await User.findByIdAndUpdate(
 				req.userId,
 				{ $push: { tables: saveTable._id } },
 				{ new: true }
@@ -39,7 +39,7 @@ class TableController {
 			res.status(200).json({
 				success: true,
 				message: 'Create table successfully',
-				saveTable,
+				table: saveTable,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -84,7 +84,7 @@ class TableController {
 			res.status(200).json({
 				success: true,
 				message: 'Update table successfully',
-				tableUpdated,
+				table: tableUpdated,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -94,14 +94,38 @@ class TableController {
 		}
 	}
 
-	getTable = async (req, res) => {
+	updateDropColumn = async (req, res) => {
 		try {
-			const table = await Table.findById(req.params.id).populate(
-				'members'
+			const table = await Table.findByIdAndUpdate(
+				req.params.id,
+				{
+					$set: { columns: req.body.tableInfor.columns },
+					upsert: true,
+				},
+				{ new: true }
 			)
 			res.status(200).json({
 				success: true,
+				message: 'Update table successfully',
 				table,
+			})
+		} catch (error) {
+			res.status(500).json({
+				success: false,
+				message: 'Interval server drop drag',
+			})
+		}
+	}
+
+	getAllTable = async (req, res) => {
+		try {
+			const tables = await Table.find()
+				.populate('members')
+				.populate('columns')
+				.populate('admin')
+			res.status(200).json({
+				success: true,
+				tables,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -116,7 +140,7 @@ class TableController {
 			const table = await Table.findByIdAndDelete(req.params.id)
 			await User.findOneAndUpdate(
 				req.userId,
-				{ $pull: { tables: saveTable._id } },
+				{ $pull: { tables: table._id } },
 				{ new: true }
 			)
 			res.status(200).json({

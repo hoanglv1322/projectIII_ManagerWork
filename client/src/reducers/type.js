@@ -1,0 +1,26 @@
+export const SET_AUTH = 'SET_AUTH'
+export const UPDATE_USER = 'UPDATE_USER'
+export const ADD_USER = 'ADD_USER'
+export const ALL_USER = 'ALL_USER'
+export const LOGOUT = 'LOGOUT_USER'
+export const CREATE_USER = 'CREATE_USER'
+
+export const ADD_TABLE = 'ADD_TABLE'
+export const UPDATE_TABLE = 'UPDATE_TABLE'
+export const REMOVE_TABLE = 'REMOVE_TABLE'
+export const ALL_TABLES = 'ALL_TABLES'
+
+export const ADD_COLUMN = 'ADD_COLUMN'
+export const UPDATE_COLUMN = 'UPDATE_COLUMN'
+export const REMOVE_COLUMN = 'REMOVE_COLUMN'
+export const ALL_COLUMNS = 'ALL_COLUMNS'
+
+export const ADD_CARD = 'ADD_CARD'
+export const UPDATE_CARD = 'UPDATE_CARD'
+export const REMOVE_CARD = 'REMOVE_CARD'
+export const ALL_CARDS = 'ALL_CARDS'
+
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+export const ALL_COMMENTS = 'ALL_COMMENTS'

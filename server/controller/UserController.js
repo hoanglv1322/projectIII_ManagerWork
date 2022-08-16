@@ -44,13 +44,6 @@ class UserController {
 	//get all user
 	getAllUsers = async (req, res) => {
 		try {
-			const user = await User.findOne({ _id: req.userId })
-			if (!user.isAdmin) {
-				res.status(400).json({
-					success: false,
-					message: 'you are not allowed',
-				})
-			}
 			const allUsers = await User.find()
 			res.status(200).json({
 				success: true,

@@ -15,7 +15,7 @@ class ColumnController {
 
 		try {
 			const saveColumn = await column.save()
-			await Table.findOneAndUpdate(
+			await Table.findByIdAndUpdate(
 				req.params.tableId,
 				{ $push: { columns: saveColumn._id } },
 				{ new: true }
@@ -23,7 +23,7 @@ class ColumnController {
 			res.status(200).json({
 				success: true,
 				message: 'Create column successfully',
-				saveColumn,
+				column: saveColumn,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -45,7 +45,7 @@ class ColumnController {
 			res.status(200).json({
 				success: true,
 				message: 'Update column successfully',
-				columnUpdated,
+				column: columnUpdated,
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -55,14 +55,35 @@ class ColumnController {
 		}
 	}
 
-	getColumn = async (req, res) => {
+	updateDropCard = async (req, res) => {
 		try {
-			const column = await Column.findById(req.params.id).populate(
-				'cards'
+			const column = await Column.findByIdAndUpdate(
+				req.params.id,
+				{
+					$set: { cards: req.body.columnInfor.cards },
+					upsert: true,
+				},
+				{ new: true }
 			)
 			res.status(200).json({
 				success: true,
+				message: 'Update column successfully',
 				column,
+			})
+		} catch (error) {
+			res.status(500).json({
+				success: false,
+				message: 'Interval server drop drag',
+			})
+		}
+	}
+
+	getAllColumn = async (req, res) => {
+		try {
+			const columns = await Column.find().populate('cards')
+			res.status(200).json({
+				success: true,
+				columns,
 			})
 		} catch (error) {
 			res.status(500).json({

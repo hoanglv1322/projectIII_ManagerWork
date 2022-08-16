@@ -19,10 +19,10 @@ router.post('/update/:id', verifyToken, cardController.updateCard)
 
 /* 
 @Router POST api/card/:id
-@des get card
+@des get all card
 @access user
 */
-router.get('/:id', verifyToken, cardController.getCard)
+router.get('/', verifyToken, cardController.getAllCard)
 
 /* 
 @Router POST api/card/delete/:id
