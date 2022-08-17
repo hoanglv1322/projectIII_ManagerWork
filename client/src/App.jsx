@@ -8,6 +8,7 @@ import { React, useContext } from 'react'
 import { AuthContext } from './context/authContext'
 import ConfirmEmail from './pages/ConfirmEmail'
 import BoardColumnPage from './pages/BoardColumnPage'
+import DashBoard from './pages/DashBoard'
 
 const Container = styled.div`
 	font-family: Roboto, sans-serif;
@@ -17,7 +18,7 @@ const Container = styled.div`
 
 const App = () => {
 	const {
-		authState: { isAuthenticated },
+		authState: { isAuthenticated, user },
 	} = useContext(AuthContext)
 	return (
 		<Container>
@@ -36,6 +37,12 @@ const App = () => {
 						path="/table/:tableId"
 						element={
 							isAuthenticated ? <BoardColumnPage /> : <Login />
+						}
+					/>
+					<Route
+						path="/dashboard"
+						element={
+							user && user.isAdmin ? <DashBoard /> : <Login />
 						}
 					/>
 					<Route path="/auth/verifyuser" element={<ConfirmEmail />} />

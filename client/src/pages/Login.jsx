@@ -104,7 +104,11 @@ const Login = () => {
 		try {
 			const loginData = await loginUser(loginForm)
 			if (loginData.success) {
-				navigation('/boardpage')
+				if (loginData.user.isAdmin) {
+					navigation('/dashboard')
+				} else {
+					navigation('/boardpage')
+				}
 			} else {
 				setError(loginData.message)
 			}
