@@ -179,7 +179,7 @@ const Table = styled.div`
 	border-radius: 5px;
 	position: relative;
 	margin-right: 16px;
-	margin-top: 16px;
+	margin-bottom: 16px;
 	background-repeat: no-repeat;
 	background-size: cover;
 
